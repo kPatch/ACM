@@ -7,6 +7,8 @@ library(kernlab)            # Use the kernlab package
 data(spam)                  # Let's take a look at the data set
 head(spam)
 
+view(spam)
+
 # The data in the kernlab package contains the 
 # frequency of which certain words appear in an 
 # e-mail
@@ -28,6 +30,22 @@ lines(density(spam$your[spam$type=="spam"]), col="red")
 # abline(v=0.1, col="black")
 abline(v=0.5, col="black")
 
-# Review of alogrithm
+# Our algorithm for detecting SPAM e-mails
+# Find a value C
+# frequency of 'your' > C predict "spam"
+# Else it is an ok e-mail
 
 # Evaluation of our prediction
+prediction <- ifelse(spam$your > 0.5, "spam", "nonspam")
+
+# Show our prediction
+table(prediction,spam$type)/length(spam$type)
+
+#
+# prediction   nonspam      spam
+# nonspam 0.4590306 0.1017170
+# spam    0.1469246 0.2923278
+
+# 0.4590306 % we correctly predict nonspam e-mails
+# 0.2923278 % we correctly predict spam e-mails
+# Accuracy is ~ 0.4590306 + 0.2923278 = 0.751
